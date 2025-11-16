@@ -3,7 +3,6 @@
 const { spawn } = require('child_process');
 const path = require('path');
 const which = require('which');
-const chalk = require('chalk');
 
 // ANSI color codes
 const colors = {

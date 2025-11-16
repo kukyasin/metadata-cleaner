@@ -1,15 +1,14 @@
 {
   "name": "ai-metadata-cleaner",
-  "version": "1.0.0",
+  "version": "1.1.0",
   "description": "A command-line tool to remove EXIF data and metadata from AI-generated images and videos",
   "main": "index.js",
   "bin": {
-    "ai-metadata-cleaner": "./bin/ai-metadata-cleaner",
-    "clean-ai-metadata": "./bin/ai-metadata-cleaner"
+    "ai-metadata-cleaner": "bin/ai-metadata-cleaner",
+    "clean-ai-metadata": "bin/ai-metadata-cleaner"
   },
   "scripts": {
     "test": "node test/test.js",
-    "install-deps": "node scripts/install-deps.js",
     "postinstall": "node scripts/postinstall.js"
   },
   "keywords": [
@@ -28,15 +27,11 @@
     "ffmpeg",
     "exiftool"
   ],
-  "author": {
-    "name": "Yasin Kuk",
-    "email": "yasinkuk@example.com",
-    "url": "https://github.com/kukyasin"
-  },
+  "author": "Yasin Kuk <yasinkuk@example.com> (https://github.com/kukyasin)",
   "license": "MIT",
   "repository": {
     "type": "git",
-    "url": "https://github.com/kukyasin/metadata-cleaner.git"
+    "url": "git+https://github.com/kukyasin/metadata-cleaner.git"
   },
   "bugs": {
     "url": "https://github.com/kukyasin/metadata-cleaner/issues"
@@ -63,14 +58,8 @@
   ],
   "preferGlobal": true,
   "dependencies": {
-    "chalk": "^4.1.2",
-    "commander": "^9.4.1",
     "which": "^2.0.2"
   },
-  "devDependencies": {
-    "jest": "^29.0.0"
-  },
-  "jest": {
-    "testEnvironment": "node"
-  }
+  "devDependencies": {},
+  "type": "commonjs"
 }

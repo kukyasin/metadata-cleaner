@@ -1,12 +1,19 @@
 #!/usr/bin/env node
 
-const chalk = require('chalk');
 const path = require('path');
 
+// ANSI color codes
+const colors = {
+  red: '\x1b[31m',
+  green: '\x1b[32m',
+  yellow: '\x1b[33m',
+  reset: '\x1b[0m'
+};
+
 const print = {
-  info: (msg) => console.log(chalk.green('[INFO]') + ' ' + msg),
-  warning: (msg) => console.log(chalk.yellow('[WARNING]') + ' ' + msg),
-  error: (msg) => console.log(chalk.red('[ERROR]') + ' ' + msg)
+  info: (msg) => console.log(`${colors.green}[INFO]${colors.reset} ${msg}`),
+  warning: (msg) => console.log(`${colors.yellow}[WARNING]${colors.reset} ${msg}`),
+  error: (msg) => console.log(`${colors.red}[ERROR]${colors.reset} ${msg}`)
 };
 
 function checkSystemDependencies() {
