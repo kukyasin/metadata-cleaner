@@ -48,6 +48,15 @@ sudo dnf install perl-Image-ExifTool ffmpeg
 
 ## Installation
 
+### Option 1: NPM Installation (Recommended)
+
+Install globally via npm:
+```bash
+npm install -g ai-metadata-cleaner
+```
+
+### Option 2: Manual Installation
+
 1. Download the script:
 ```bash
 curl -O https://raw.githubusercontent.com/kukyasin/metadata-cleaner/main/clean_metadata.sh
@@ -65,7 +74,35 @@ sudo mv clean_metadata.sh /usr/local/bin/clean-metadata
 
 ## Usage
 
-### Basic Usage
+### Using NPM Package
+
+```bash
+# Clean single file with backup
+ai-metadata-cleaner -b image.jpg
+
+# Clean entire directory
+ai-metadata-cleaner -d /path/to/images
+
+# Recursive processing with backup
+ai-metadata-cleaner -r -d /path/to/media -b
+
+# Show help
+ai-metadata-cleaner --help
+```
+
+### Using as a Library
+
+```javascript
+const { cleanFile, cleanDirectory } = require('ai-metadata-cleaner');
+
+// Clean a single file
+await cleanFile('image.jpg', { backup: true });
+
+// Clean a directory
+await cleanDirectory('/path/to/images', { recursive: true, backup: true });
+```
+
+### Basic Usage (Manual Installation)
 
 Clean metadata from individual files:
 ```bash
