@@ -1,6 +1,18 @@
-# Metadata Cleaner for AI-generated Images and Videos
+# AI Metadata Cleaner
 
-This shell script removes EXIF data and other metadata from AI-generated images and videos, helping protect privacy and remove traces of AI generation tools.
+A lightweight command-line tool to remove EXIF data and metadata from AI-generated images and videos. Protect your privacy by cleaning hidden metadata that can reveal creation tools, timestamps, and location data.
+
+**📦 NPM Package:** [ai-metadata-cleaner](https://www.npmjs.com/package/ai-metadata-cleaner)
+
+## Features
+
+- 🚀 **Zero Dependencies** - Built with native Node.js
+- 📁 **19+ Formats** - Support for all major image and video formats
+- ⚡ **Batch Processing** - Clean entire directories at once
+- 🔄 **Recursive Mode** - Process nested folders
+- 💾 **Automatic Backups** - Optional timestamped backups
+- 🎨 **Colored Output** - Clear progress indicators
+- 🌍 **Cross-Platform** - Works on macOS, Linux, and Windows
 
 ## Supported Formats
 
@@ -25,9 +37,23 @@ This shell script removes EXIF data and other metadata from AI-generated images 
 - 3GP (.3gp)
 - OGV (.ogv)
 
+## Installation
+
+### Global Installation (Recommended)
+
+```bash
+npm install -g ai-metadata-cleaner
+```
+
+### Local Installation
+
+```bash
+npm install ai-metadata-cleaner
+```
+
 ## Prerequisites
 
-The script requires the following tools:
+This tool requires the following system dependencies:
 
 ### macOS (using Homebrew)
 ```bash
@@ -46,39 +72,28 @@ sudo yum install perl-Image-ExifTool ffmpeg
 sudo dnf install perl-Image-ExifTool ffmpeg
 ```
 
-## Installation
-
-### Option 1: NPM Installation (Recommended)
-
-Install globally via npm:
+### Windows
 ```bash
-npm install -g ai-metadata-cleaner
-```
+# Using Chocolatey
+choco install exiftool ffmpeg
 
-### Option 2: Manual Installation
-
-1. Download the script:
-```bash
-curl -O https://raw.githubusercontent.com/kukyasin/metadata-cleaner/main/clean_metadata.sh
-```
-
-2. Make it executable:
-```bash
-chmod +x clean_metadata.sh
-```
-
-3. (Optional) Move to a directory in your PATH:
-```bash
-sudo mv clean_metadata.sh /usr/local/bin/clean-metadata
+# Or download manually from:
+# https://exiftool.org/ and https://ffmpeg.org/download.html
 ```
 
 ## Usage
 
-### Using NPM Package
+### Command Line Interface
 
 ```bash
+# Show help
+ai-metadata-cleaner --help
+
 # Clean single file with backup
 ai-metadata-cleaner -b image.jpg
+
+# Clean multiple files
+ai-metadata-cleaner -b image1.jpg image2.png video.mp4
 
 # Clean entire directory
 ai-metadata-cleaner -d /path/to/images
@@ -86,73 +101,15 @@ ai-metadata-cleaner -d /path/to/images
 # Recursive processing with backup
 ai-metadata-cleaner -r -d /path/to/media -b
 
-# Show help
-ai-metadata-cleaner --help
+# Preview without making changes
+ai-metadata-cleaner --dry-run image.jpg
+ai-metadata-cleaner --dry-run -d /path/to/images
+
+# Alternative command name
+clean-ai-metadata -b image.jpg
 ```
 
-### Using as a Library
-
-```javascript
-const { cleanFile, cleanDirectory } = require('ai-metadata-cleaner');
-
-// Clean a single file
-await cleanFile('image.jpg', { backup: true });
-
-// Clean a directory
-await cleanDirectory('/path/to/images', { recursive: true, backup: true });
-```
-
-### Basic Usage (Manual Installation)
-
-Clean metadata from individual files:
-```bash
-./clean_metadata.sh image.jpg
-./clean_metadata.sh video.mp4
-```
-
-Clean metadata from multiple files:
-```bash
-./clean_metadata.sh image1.jpg image2.png video.mp4
-```
-
-### Advanced Options
-
-#### Create Backups
-Automatically create backup files before cleaning:
-```bash
-./clean_metadata.sh -b image.jpg
-./clean_metadata.sh --backup image1.jpg image2.mp4
-```
-
-#### Process Directories
-Clean all media files in a directory:
-```bash
-./clean_metadata.sh -d /path/to/images
-./clean_metadata.sh --directory /path/to/videos
-```
-
-#### Recursive Processing
-Process directories and all subdirectories:
-```bash
-./clean_metadata.sh -r -d /path/to/media
-./clean_metadata.sh --recursive --directory /path/to/media
-```
-
-#### Combine Options
-Create backups while processing directories recursively:
-```bash
-./clean_metadata.sh -r -d /path/to/media -b
-./clean_metadata.sh --recursive --directory /path/to/media --backup
-```
-
-#### Dry Run Mode
-Preview what would be cleaned without making changes:
-```bash
-./clean_metadata.sh --dry-run image.jpg
-./clean_metadata.sh --dry-run -d /path/to/images
-```
-
-## Command Line Options
+### Command Line Options
 
 | Option | Description |
 |--------|-------------|
@@ -162,56 +119,102 @@ Preview what would be cleaned without making changes:
 | `-r, --recursive` | Process directory recursively |
 | `--dry-run` | Show what would be cleaned without doing it |
 
-## Examples
+### Programmatic Usage
 
-### Example 1: Clean a single image with backup
-```bash
-./clean_metadata.sh -b ai-generated-portrait.jpg
-```
-**Output:**
-```
-[INFO] Metadata Cleaner for AI-generated Images and Videos
-[INFO] Backup enabled: true
-[INFO] Processing image: ai-generated-portrait.jpg
-[INFO] Backup created: ai-generated-portrait.jpg.backup.20241116_143022
-[INFO] Metadata removed from: ai-generated-portrait.jpg
-[INFO] Metadata cleaning completed!
-```
+```javascript
+// CommonJS
+const { cleanFile, cleanDirectory, checkDependencies } = require('ai-metadata-cleaner');
 
-### Example 2: Process an entire directory
-```bash
-./clean_metadata.sh -d ./ai-artwork
-```
-**Output:**
-```
-[INFO] Metadata Cleaner for AI-generated Images and Videos
-[INFO] Backup enabled: false
-[INFO] Processing directory: ./ai-artwork
-[INFO] Processing image: ./ai-artwork/portrait1.jpg
-[INFO] Metadata removed from: ./ai-artwork/portrait1.jpg
-[INFO] Processing video: ./ai-artwork/animation1.mp4
-[INFO] Metadata removed from: ./ai-artwork/animation1.mp4
-[INFO] Metadata cleaning completed!
+// ES Modules
+import { cleanFile, cleanDirectory, checkDependencies } from 'ai-metadata-cleaner';
+
+// Clean a single file
+await cleanFile('image.jpg', { backup: true });
+
+// Clean multiple files
+await cleanFile(['image1.jpg', 'image2.png'], { backup: false });
+
+// Clean a directory
+await cleanDirectory('/path/to/images', {
+  recursive: true,
+  backup: true
+});
+
+// Check dependencies
+const deps = checkDependencies();
+if (!deps.hasDependencies) {
+  console.log('Missing:', deps.missing);
+}
 ```
 
-### Example 3: Recursive processing with backups
+### Advanced Examples
+
 ```bash
-./clean_metadata.sh -r -d ./media-library -b
+# Batch processing with backup
+ai-metadata-cleaner -r -d ./ai-artwork -b
+
+# Dry run to see what will be processed
+ai-metadata-cleaner --dry-run -r -d ./media-folder
+
+# Clean specific files
+ai-metadata-cleaner -b ./portrait.jpg ./avatar.png ./demo.mp4
 ```
 
-### Example 4: Dry run to see what would be processed
+## What Metadata Gets Removed?
+
+### From Images:
+- Camera manufacturer and model information
+- GPS location data and coordinates
+- Date and time information (creation, modification)
+- Camera settings (ISO, aperture, shutter speed)
+- Software information and processing history
+- Copyright information and comments
+- AI tool signatures and watermarks
+- EXIF, IPTC, and XMP metadata
+
+### From Videos:
+- Creation date and time stamps
+- Camera and device information
+- GPS location metadata
+- Software and encoding information
+- Metadata tags and comments
+- Stream information and headers
+
+## Safety Features
+
+### Automatic Backups
+When using the `-b` or `--backup` option, the script creates timestamped backup files:
+```
+original.jpg → original.jpg.backup.20241116_143022
+```
+
+### Dependency Checking
+The package automatically checks for required system tools and provides installation instructions.
+
+### Error Handling
+- Verifies file existence before processing
+- Checks write permissions
+- Validates directory paths
+- Provides clear error messages and warnings
+- Safe operation with rollback via backups
+
+## Quick Start Examples
+
 ```bash
-./clean_metadata.sh --dry-run image.jpg video.mp4
-```
-**Output:**
-```
-[INFO] Metadata Cleaner for AI-generated Images and Videos
-[INFO] Backup enabled: false
-[WARNING] DRY RUN MODE - No files will be modified
-[INFO] Would process 2 files:
-  - image.jpg
-  - video.mp4
-  Create backups: false
+# Install globally
+npm install -g ai-metadata-cleaner
+
+# Clean a single file with backup
+ai-metadata-cleaner -b ai-generated-portrait.jpg
+
+# Process entire directory
+ai-metadata-cleaner -d ./ai-artwork
+
+# Recursive processing with backups
+ai-metadata-cleaner -r -d ./media-library -b
+
+# Preview what would be cleaned
+ai-metadata-cleaner --dry-run image.jpg video.mp4
 ```
 
 ## What Metadata Gets Removed?
@@ -255,25 +258,32 @@ The script automatically checks for required tools and provides installation ins
 
 ### Common Issues
 
-1. **Permission Denied**
+1. **Command Not Found**
+   - Install prerequisites: `brew install exiftool ffmpeg`
+   - Verify npm installation: `npm list -g ai-metadata-cleaner`
+
+2. **Dependencies Missing**
    ```bash
-   chmod +x clean_metadata.sh
+   # macOS
+   brew install exiftool ffmpeg
+
+   # Ubuntu/Debian
+   sudo apt install libimage-exiftool-perl ffmpeg
+
+   # Windows
+   choco install exiftool ffmpeg
    ```
 
-2. **Command Not Found**
-   - Install prerequisites (exiftool, ffmpeg)
-   - Check if script is in your PATH
+3. **Permission Denied**
+   - Check file permissions: `ls -la filename.jpg`
+   - Ensure write permissions on target files
 
-3. **File Not Found**
+4. **File Not Found**
    - Verify file paths are correct
    - Use absolute paths if needed
 
-4. **Permission Denied for Directory Processing**
-   ```bash
-   sudo ./clean_metadata.sh -d /protected/path
-   ```
-
 ### Verification
+
 To verify metadata has been removed:
 
 #### For Images:
@@ -290,25 +300,19 @@ ffprobe filename.mp4
 
 ## Security Considerations
 
-- This script permanently modifies files
+- This tool permanently modifies files
 - Always create backups when working with important files
 - Test on sample files first
-- The script only removes metadata, it doesn't modify the actual image/video content
+- The tool only removes metadata, it doesn't modify actual image/video content
 
 ## License
 
-This script is provided as-is for educational and personal use. Use responsibly and only on files you own or have permission to modify.
+MIT License - see [LICENSE](LICENSE) file for details.
 
 ## Contributing
 
 Feel free to submit issues, feature requests, or pull requests to improve this tool.
 
-## Changelog
+**📦 NPM Package:** [ai-metadata-cleaner](https://www.npmjs.com/package/ai-metadata-cleaner)
 
-### v1.0.0
-- Initial release
-- Support for major image and video formats
-- Backup functionality
-- Directory processing
-- Recursive processing
-- Dry run mode
+**🔗 GitHub:** [kukyasin/metadata-cleaner](https://github.com/kukyasin/metadata-cleaner)
