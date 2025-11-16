@@ -1,6 +1,6 @@
 {
   "name": "ai-metadata-cleaner",
-  "version": "1.3.0",
+  "version": "1.3.1",
   "description": "A command-line tool to remove EXIF data and metadata from AI-generated images and videos",
   "main": "index.js",
   "bin": {

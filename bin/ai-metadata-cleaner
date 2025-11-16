@@ -1,112 +1,22 @@
 #!/usr/bin/env node
 
-const { spawn, spawnSync } = require('child_process');
+const { spawnSync } = require('child_process');
 const path = require('path');
 
-// ANSI color codes
-const colors = {
-  red: '\x1b[31m',
-  green: '\x1b[32m',
-  yellow: '\x1b[33m',
-  reset: '\x1b[0m'
-};
-
-// Print colored output
-const print = {
-  info: (msg) => console.log(`${colors.green}[INFO]${colors.reset} ${msg}`),
-  warning: (msg) => console.log(`${colors.yellow}[WARNING]${colors.reset} ${msg}`),
-  error: (msg) => console.log(`${colors.red}[ERROR]${colors.reset} ${msg}`)
-};
-
-// Check if dependencies are installed
-function checkDependencies() {
-  const requiredTools = ['exiftool', 'ffmpeg'];
-  const missingTools = [];
-
-  for (const tool of requiredTools) {
-    try {
-      const result = spawnSync('which', [tool], { stdio: 'pipe' });
-      if (result.status !== 0) {
-        missingTools.push(tool);
-      }
-    } catch (error) {
-      missingTools.push(tool);
-    }
-  }
-
-  if (missingTools.length > 0) {
-    print.error(`Missing dependencies: ${missingTools.join(', ')}`);
-    print.info('Install with:');
-
-    if (process.platform === 'darwin') {
-      console.log('  brew install exiftool ffmpeg');
-    } else if (process.platform === 'linux') {
-      const aptCheck = spawnSync('which', ['apt'], { stdio: 'pipe' });
-      const yumCheck = spawnSync('which', ['yum'], { stdio: 'pipe' });
-      const dnfCheck = spawnSync('which', ['dnf'], { stdio: 'pipe' });
-
-      if (aptCheck.status === 0) {
-        console.log('  sudo apt install libimage-exiftool-perl ffmpeg');
-      } else if (yumCheck.status === 0 || dnfCheck.status === 0) {
-        console.log('  sudo yum install perl-Image-ExifTool ffmpeg');
-      } else {
-        console.log('  Please install exiftool and ffmpeg manually');
-      }
-    } else {
-      console.log('  Please install exiftool and ffmpeg manually');
-      console.log('  Windows: https://exiftool.org/ and https://ffmpeg.org/download.html');
-    }
-    return false;
-  }
-  return true;
-}
-
-// Run the bash script
-function runScript(args) {
+// Run the bash script directly with all arguments
+function main() {
+  const args = process.argv.slice(2);
   const scriptPath = path.join(__dirname, '..', 'scripts', 'clean_metadata.sh');
 
-  const child = spawn('bash', [scriptPath, ...args], {
+  const result = spawnSync('bash', [scriptPath, ...args], {
     stdio: 'inherit',
     cwd: process.cwd()
   });
 
-  child.on('exit', (code) => {
-    process.exit(code);
-  });
-
-  child.on('error', (error) => {
-    print.error(`Failed to execute script: ${error.message}`);
-    process.exit(1);
-  });
+  process.exit(result.status || 0);
 }
-
-// Main function
-function main() {
-  const args = process.argv.slice(2);
-
-  // Check dependencies first
-  if (!checkDependencies()) {
-    process.exit(1);
-  }
-
-  // Run the bash script with original arguments
-  runScript(args);
-}
-
-// Handle uncaught exceptions
-process.on('uncaughtException', (error) => {
-  print.error(`Unexpected error: ${error.message}`);
-  process.exit(1);
-});
-
-process.on('unhandledRejection', (reason) => {
-  print.error(`Unhandled rejection: ${reason}`);
-  process.exit(1);
-});
 
 // Run main function
 if (require.main === module) {
   main();
 }
-
-module.exports = { checkDependencies };

@@ -179,8 +179,10 @@ process_directory() {
 show_usage() {
     echo "Metadata Cleaner for AI-generated Images and Videos"
     echo
-    echo "Usage: $0 [OPTIONS] <file1> [file2] ... [fileN]"
-    echo "       $0 [OPTIONS] -d <directory>"
+    echo "Usage: ai-metadata-cleaner [OPTIONS] <file1> [file2] ... [fileN]"
+    echo "       ai-metadata-cleaner [OPTIONS] -d <directory>"
+    echo "       clean-ai-metadata [OPTIONS] <file1> [file2] ... [fileN]"
+    echo "       clean-ai-metadata [OPTIONS] -d <directory>"
     echo
     echo "Options:"
     echo "  -h, --help           Show this help message"
@@ -194,10 +196,13 @@ show_usage() {
     echo "  Videos: mp4, avi, mov, mkv, wmv, flv, webm, m4v, 3gp, ogv"
     echo
     echo "Examples:"
-    echo "  $0 image1.jpg video.mp4"
-    echo "  $0 -b image1.jpg image2.png"
-    echo "  $0 -d /path/to/images"
-    echo "  $0 -r -d /path/to/media -b"
+    echo "  ai-metadata-cleaner image1.jpg video.mp4"
+    echo "  ai-metadata-cleaner -b image1.jpg image2.png"
+    echo "  ai-metadata-cleaner -d /path/to/images"
+    echo "  ai-metadata-cleaner -r -d /path/to/media -b"
+    echo
+    echo "  clean-ai-metadata -b image.jpg"
+    echo "  clean-ai-metadata -d /path/to/images"
 }
 
 # Main function
