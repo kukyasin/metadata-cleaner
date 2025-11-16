@@ -1,8 +1,7 @@
 #!/usr/bin/env node
 
-const { spawn } = require('child_process');
+const { spawn, spawnSync } = require('child_process');
 const path = require('path');
-const which = require('which');
 
 // ANSI color codes
 const colors = {
@@ -26,7 +25,10 @@ function checkDependencies() {
 
   for (const tool of requiredTools) {
     try {
-      which.sync(tool);
+      const result = spawnSync('which', [tool], { stdio: 'pipe' });
+      if (result.status !== 0) {
+        missingTools.push(tool);
+      }
     } catch (error) {
       missingTools.push(tool);
     }
@@ -39,9 +41,13 @@ function checkDependencies() {
     if (process.platform === 'darwin') {
       console.log('  brew install exiftool ffmpeg');
     } else if (process.platform === 'linux') {
-      if (which.sync('apt', { nothrow: true })) {
+      const aptCheck = spawnSync('which', ['apt'], { stdio: 'pipe' });
+      const yumCheck = spawnSync('which', ['yum'], { stdio: 'pipe' });
+      const dnfCheck = spawnSync('which', ['dnf'], { stdio: 'pipe' });
+
+      if (aptCheck.status === 0) {
         console.log('  sudo apt install libimage-exiftool-perl ffmpeg');
-      } else if (which.sync('yum', { nothrow: true }) || which.sync('dnf', { nothrow: true })) {
+      } else if (yumCheck.status === 0 || dnfCheck.status === 0) {
         console.log('  sudo yum install perl-Image-ExifTool ffmpeg');
       } else {
         console.log('  Please install exiftool and ffmpeg manually');
