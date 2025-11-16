@@ -50,7 +50,7 @@ sudo dnf install perl-Image-ExifTool ffmpeg
 
 1. Download the script:
 ```bash
-curl -O https://raw.githubusercontent.com/your-repo/metadata-deleter/main/clean_metadata.sh
+curl -O https://raw.githubusercontent.com/kukyasin/metadata-cleaner/main/clean_metadata.sh
 ```
 
 2. Make it executable:
