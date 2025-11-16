@@ -2,17 +2,17 @@
 
 A lightweight command-line tool to remove EXIF data and metadata from AI-generated images and videos. Protect your privacy by cleaning hidden metadata that can reveal creation tools, timestamps, and location data.
 
-**📦 NPM Package:** [ai-metadata-cleaner](https://www.npmjs.com/package/ai-metadata-cleaner)
+**NPM Package:** [ai-metadata-cleaner](https://www.npmjs.com/package/ai-metadata-cleaner)
 
 ## Features
 
-- 🚀 **Zero Dependencies** - Built with native Node.js
-- 📁 **19+ Formats** - Support for all major image and video formats
-- ⚡ **Batch Processing** - Clean entire directories at once
-- 🔄 **Recursive Mode** - Process nested folders
-- 💾 **Automatic Backups** - Optional timestamped backups
-- 🎨 **Colored Output** - Clear progress indicators
-- 🌍 **Cross-Platform** - Works on macOS, Linux, and Windows
+- **Zero Dependencies** - Built with native Node.js
+- **19+ Formats** - Support for all major image and video formats
+- **Batch Processing** - Clean entire directories at once
+- **Recursive Mode** - Process nested folders
+- **Automatic Backups** - Optional timestamped backups
+- **Colored Output** - Clear progress indicators
+- **Cross-Platform** - Works on macOS, Linux, and Windows
 
 ## Supported Formats
 
@@ -313,6 +313,6 @@ MIT License - see [LICENSE](LICENSE) file for details.
 
 Feel free to submit issues, feature requests, or pull requests to improve this tool.
 
-**📦 NPM Package:** [ai-metadata-cleaner](https://www.npmjs.com/package/ai-metadata-cleaner)
+**NPM Package:** [ai-metadata-cleaner](https://www.npmjs.com/package/ai-metadata-cleaner)
 
-**🔗 GitHub:** [kukyasin/metadata-cleaner](https://github.com/kukyasin/metadata-cleaner)
+**GitHub:** [kukyasin/metadata-cleaner](https://github.com/kukyasin/metadata-cleaner)
